@@ -28,8 +28,8 @@
       x-stretch-cursor t)
 
 ;; Display defaults
-(setq column-wrap-soft 80
-      column-wrap-hard 100)
+(setq column-wrap-soft 100
+      column-wrap-hard 120)
 (setq sentence-end-double-space nil)
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2)

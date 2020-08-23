@@ -6,8 +6,15 @@
 
 ;;------------------------------------------------------------------------------
 ;; Colours in graphical mode
-(when (display-graphic-p)
-  (load-theme 'hipster))
+(use-package zenburn-theme
+  :if (display-graphic-p)
+  :ensure t
+  :init
+  (setq zenburn-override-colors-alist
+        '(("zenburn-bg" . "#00000000")))
+  :config
+  (load-theme 'zenburn))
+
 
 ;;------------------------------------------------------------------------------
 ;; Highlight FIXME/TODO

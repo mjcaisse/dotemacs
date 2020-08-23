@@ -34,8 +34,16 @@
    '((C . t)
      (js . t)
      (haskell . t)
-     (emacs-lisp . t)))
+     (emacs-lisp . t)
+     (plantuml . t)
+     (dot . t)))
   (add-to-list 'org-structure-template-alist '("n" . "notes")))
+
+(setq org-plantuml-jar-path
+      (expand-file-name "~/tools/plantuml/plantuml.jar"))
+
+;; with dot and plantuml babel it is nice to have the images refresh
+(add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
 
 ;; better header bullets
 (use-package org-bullets
@@ -81,18 +89,25 @@
 (bind-key "C-c a" 'org-agenda)
 (bind-key "C-c i" 'org-iswitchb)
 
+(use-package ox-gfm
+  :ensure t
+  :defer
+  :after org)
+
 (add-hook 'org-mode-hook
           (lambda ()
             (add-to-list 'org-latex-packages-alist '("" "minted" nil))
             (bind-key "M-Q" 'toggle-truncate-lines org-mode-map)
             (require 'ox-latex)
             (require 'ox-beamer)
+            (require 'ox-gfm)
             (require 'org-re-reveal)
             (require 'htmlize)
             (add-to-list 'org-beamer-environments-extra
 			 '("onlyenv" "O" "\\begin{onlyenv}%a" "\\end{onlyenv}"))))
 
 (setq initial-major-mode 'org-mode)
+
 
 ;; swap org-mode cells
 (defun md-org-table-swap-cells (row col nextrow nextcol)

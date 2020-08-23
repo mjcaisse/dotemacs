@@ -30,6 +30,12 @@
   :hook (python-mode . elpy-mode))
 
 ;;------------------------------------------------------------------------------
+;; blanken
+(use-package blacken
+  :ensure t
+  :hook (python-mode . blacken-mode))
+
+;;------------------------------------------------------------------------------
 ;; pyautopep8
 (use-package py-autopep8
   :ensure t
@@ -49,16 +55,16 @@
 
 ;;------------------------------------------------------------------------------
 ;; on save: fix imports, sort them, remove unused, then pep8
-(defun my-python-before-save-hook ()
-  (save-excursion
-    (importmagic-fix-imports)
-    (pyimpsort-remove-unused)
-    (pyimpsort-buffer)
-    (py-autopep8-buffer)))
+;;(defun my-python-before-save-hook ()
+;;  (save-excursion
+;;    (importmagic-fix-imports)
+;;    (pyimpsort-remove-unused)
+;;    (pyimpsort-buffer)
+;;    (py-autopep8-buffer)))
 
-(add-hook 'elpy-mode-hook
-          (lambda () (importmagic-mode)
-            (add-hook 'before-save-hook 'my-python-before-save-hook t 'local)))
+;;(add-hook 'elpy-mode-hook
+;;          (lambda () (importmagic-mode)
+;;            (add-hook 'before-save-hook 'my-python-before-save-hook t 'local)))
 
 ;;------------------------------------------------------------------------------
 ;; jupyter
@@ -71,3 +77,42 @@
   :config
   (setq ein:notebook-autosave-frequency 0)
   :hook (ein:notebook-mode . my-ein-keybindings))
+
+
+;;------------------------------------------------------------------------------
+;; symboly things
+;;
+(set-fontset-font "fontset-default" '(#x2131 . #x2757) "Symbola")
+(add-hook
+ 'python-mode-hook
+ (lambda ()
+   (mapc (lambda (pair) (push pair prettify-symbols-alist))
+         '(;; Syntax
+           ("def" .      #x1d487)
+           ;; ("not" .      #x2757)
+           ("in" .       #x2208)
+           ("not in" .   #x2209)
+           ("!=" . #x2260)
+           ("<=" . #x2264)
+           (">=" . #x2265)
+           ;; ("return" .   #x27fc)
+           ;; ("yield" .    #x27fb)
+           ;; ("for" .      #x2200)
+           ;; Base Types
+           ;; ("int" .      #x2124)
+           ;; ("float" .    #x211d)
+           ;; ("str" .      #x1d54a)
+           ("True" .    #x1d54b)
+           ("False" .   #x1d53d)
+           ("None" .    #x2205)
+           ;; Mypy
+           ;; ("Dict" .     #x1d507)
+           ;; ("List" .     #x2112)
+           ;; "Tuple" .    #x2a02)
+           ;; ("Set" .      #x2126)
+           ;; ("Iterable" . #x1d50a)
+           ;; ("Any" .      #x2754)
+           ;; ("Union" .    #x22c3)
+           ))))
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------

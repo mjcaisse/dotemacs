@@ -5,16 +5,19 @@
   (setq my-font-height 120))
 
 (set-face-attribute 'default nil
-                    :family "Inconsolata"
+                    :family "Source Code Pro"
                     :height my-font-height
                     :weight 'normal
                     :width 'normal)
-(set-fontset-font "fontset-default"
-                  '(#x0100 . #xffff)
-                  (font-spec :family "DejaVu Sans Mono"
-                             :height my-font-height
-                             :weight 'normal
-                             :width 'normal))
+
+;;(set-fontset-font "fontset-default"
+;;                  '(#x0100 . #xffff)
+;;                  (font-spec :family "Source Code Pro"
+;;                             :height my-font-height
+;;                             :weight 'normal
+;;                             :width 'normal))
+
+;;(set-default-font "Source Code Pro")
 
 ;;------------------------------------------------------------------------------
 (use-package dash

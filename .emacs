@@ -4,7 +4,7 @@
 ;; plenty of memory, GC threshold is 100MB
 (setq gc-cons-threshold 100000000)
 
-(setq user-full-name "Ben Deane")
+(setq user-full-name "Michael Caisse")
 
 ;; this file's true directory
 (setq dotfile-dir (file-name-directory
@@ -51,7 +51,7 @@
 (setq use-package-minimum-reported-time 0
       use-package-verbose t)
 
-(setq personal-keybindings nil)
+;; (setq personal-keybindings nil)
 
 ;;------------------------------------------------------------------------------
 ;; Startup profiling
@@ -73,7 +73,13 @@
 
 ;;------------------------------------------------------------------------------
 ;; Global key bindings
-(load "global-keys.el")
+;; (load "global-keys.el")
+;; Moving windows
+(bind-key "C-c <left>"  'windmove-left)
+(bind-key "C-c <right>" 'windmove-right)
+(bind-key "C-c <up>"    'windmove-up)
+(bind-key "C-c <down>"  'windmove-down)
+(setq mac-command-modifier 'meta)
 
 ;;------------------------------------------------------------------------------
 ;; Major modes

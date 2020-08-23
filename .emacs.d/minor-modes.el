@@ -100,6 +100,12 @@
   :diminish smart-tab-mode)
 
 ;;------------------------------------------------------------------------------
+;; Indent tools
+(use-package indent-tools
+  :ensure t
+  :bind (("C-c TAB" . indent-tools-hydra/body)))
+
+;;------------------------------------------------------------------------------
 ;; which-key to give help on keys
 (use-package which-key
   :ensure t
@@ -189,6 +195,7 @@
               ("M-<up>" . previous-error))
   :hook ((c++-mode . flycheck-mode)
          (python-mode . flycheck-mode)
+         (yaml-mode . flycheck-mode)
          (sh-mode . flycheck-mode)))
 
 ;;------------------------------------------------------------------------------
