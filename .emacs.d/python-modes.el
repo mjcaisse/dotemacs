@@ -16,7 +16,7 @@
 
 (add-hook 'python-mode-hook
           (lambda () (bind-keys :map python-mode-map
-                           ("C-c s" . toggle-string-to-fstring))))
+                           ("C-c f" . toggle-string-to-fstring))))
 
 ;;------------------------------------------------------------------------------
 ;; elpy
@@ -24,15 +24,12 @@
   :ensure t
   :init
   (setq python-indent-offset 4
-        elpy-rpc-python-command "python3"
-        elpy-rpc-timeout 10)
+        elpy-rpc-python-command "python3")
   :bind (:map elpy-mode-map
-              ("M-k" . elpy-check)
-              ("C-c f" . elpy-black-fix-code))
+              ("M-k" . elpy-check))
   :hook (python-mode . elpy-mode))
 
 ;;------------------------------------------------------------------------------
-
 ;; blacken
 (use-package blacken
   :ensure t
@@ -47,21 +44,27 @@
 
 ;;------------------------------------------------------------------------------
 ;; manage python imports
+(use-package pyimport
+  :ensure t)
+
+(use-package importmagic
+  :ensure t)
+
 (use-package pyimpsort
   :ensure t)
 
 ;;------------------------------------------------------------------------------
-;; on save: remove unused imports, sort them, then format with black
+;; on save: fix imports, sort them, remove unused, then pep8
 ;;(defun my-python-before-save-hook ()
 ;;  (save-excursion
-;;    (elpy-black-fix-code)
-;;    (pyimpsort-buffer)))
+;;    (importmagic-fix-imports)
+;;    (pyimpsort-remove-unused)
+;;    (pyimpsort-buffer)
+;;    (py-autopep8-buffer)))
 
 ;;(add-hook 'elpy-mode-hook
-;;          (lambda () (add-hook 'before-save-hook 'my-python-before-save-hook t 'local)
-;;            (define-key elpy-mode-map (kbd "<M-up>") nil)
-;;            (define-key elpy-mode-map (kbd "<M-down>") nil)))
-
+;;          (lambda () (importmagic-mode)
+;;            (add-hook 'before-save-hook 'my-python-before-save-hook t 'local)))
 
 ;;------------------------------------------------------------------------------
 ;; jupyter
