@@ -156,11 +156,63 @@
 (setq-default whitespace-line-column column-wrap-soft
               whitespace-style '(face lines-tail))
 (setq my-post-fill-column-fg (if (display-graphic-p) "gray20" "yellow"))
-(add-hook 'prog-mode-hook (lambda ()
-                            (unless (string-match-p (regexp-quote "*temp*") (buffer-name))
-                              (whitespace-mode)
-                              (set-face-attribute 'whitespace-line nil
-                                                  :foreground my-post-fill-column-fg))))
+(add-hook 'prog-mode-hook (lambda () (whitespace-mode)
+                            (set-face-attribute 'whitespace-line nil
+                                                :foreground my-post-fill-column-fg)))
+
+;;------------------------------------------------------------------------------
+;; ivy completion things
+(use-package counsel
+  :ensure t
+  :after ivy
+  :config (counsel-mode))
+
+(use-package ivy
+  :ensure t
+;;  :bind (("C-c C-r" . ivy-resume)
+;;         ("C-x B" . ivy-switch-buffer-other-window))
+  :custom
+  (ivy-count-format "(%d/%d) ")
+  (ivy-use-virtual-buffers t)
+  (ivy-re-builders-alist
+   '((t . ivy--regex-ignore-order)))
+  :config (ivy-mode))
+
+(use-package ivy-posframe
+  :ensure t
+  :demand t
+  :after ivy
+  :custom
+  (ivy-posframe-display-functions-alist
+   '(;;(swiper          . ivy-posframe-display-at-window-top-right)
+     (swiper          . ivy-display-function-fallback)
+     (complete-symbol . ivy-posframe-display-at-point)
+     (counsel-M-x     . ivy-posframe-display-at-window-bottom-left)
+     (t               . ivy-posframe-display-at-frame-center)))
+  :config
+  (ivy-posframe-mode))
+
+(use-package ivy-rich
+  :ensure t
+  :after ivy
+  :config
+  (ivy-rich-mode 1))
+
+(use-package swiper
+  :ensure t
+  :after ivy
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper)))
+
+;;------------------------------------------------------------------------------
+;; eyebrowse for managing 'workspaces'
+;; (use-package eyebrowse
+;;   :ensure t
+;;   :config
+;;   (validate-setq ;eyebrowse-mode-line-separator " "
+;;                  eyebrowse-new-workspace t)
+;;
+;;   (eyebrowse-mode t))
 
 ;;------------------------------------------------------------------------------
 ;; Projectile
@@ -168,6 +220,7 @@
   :ensure t
   :config
   (setq projectile-enable-caching t
+        projectile-completion-system 'ivy
         projectile-use-git-grep t)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   :bind (("C-x f" . projectile-find-file)

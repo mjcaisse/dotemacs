@@ -31,6 +31,10 @@
     (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-sane-defaults)))
  '(highlight-symbol-idle-delay 0)
  '(highlight-symbol-on-navigation-p t)
+ '(ivy-count-format "(%d/%d) ")
+ '(ivy-posframe-display-functions-alist (quote ((t . ivy-posframe-display-at-frame-center))))
+ '(ivy-use-virtual-buffers t)
+ '(ivy-virtual-abbreviate (quote full))
  '(org-export-with-sub-superscripts (quote {}))
  '(package-selected-packages
    (quote
